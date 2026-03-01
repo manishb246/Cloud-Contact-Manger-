@@ -1,6 +1,3 @@
-# React PhoneDir
-
-A React + Tailwind CSS Phone Directory app. UI-only — wired up for you to plug in your own backend.
 
 ## Project Structure
 
