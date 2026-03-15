@@ -1,83 +1,177 @@
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 src/
-├── App.jsx                  ← Main app with page routing (state-based)
-├── index.jsx                ← Entry point
-├── index.css                ← Tailwind imports
+├── App.jsx                  ← Main application component handling page routing and state
+├── index.jsx                ← Application entry point
+├── index.css                ← TailwindCSS imports and global styles
+│
 ├── components/
-│   ├── Navbar.jsx           ← Top navigation bar
-│   └── ContactCard.jsx      ← Individual contact card (view/edit/delete buttons)
+│   ├── Navbar.jsx           ← Top navigation bar component
+│   └── ContactCard.jsx      ← Individual contact card with view/edit/delete actions
+│
 └── pages/
-    ├── PhoneDirectory.jsx   ← Contact list with search
-    ├── CreateContact.jsx    ← Create contact form
-    ├── ViewContact.jsx      ← Contact detail view
-    └── UpdateContact.jsx    ← Edit contact form (with live avatar preview)
+    ├── PhoneDirectory.jsx   ← Displays contact list with search functionality
+    ├── CreateContact.jsx    ← Form to create a new contact
+    ├── ViewContact.jsx      ← Displays detailed contact information
+    └── UpdateContact.jsx    ← Form to update contact with live avatar preview
 ```
 
-## Setup
+---
+
+# ⚙️ Setup & Installation
+
+Follow these steps to run the frontend application locally.
+
+### 1️⃣ Install Dependencies
 
 ```bash
 npm install
+```
+
+### 2️⃣ Run Development Server
+
+```bash
 npm run dev
 ```
 
-## Connecting Your Backend
+The application will start on:
 
-All backend integration points are marked with `// TODO:` comments in `App.jsx`.
+```
+http://localhost:5173
+```
 
-### App.jsx — Where to add your API calls:
+---
+
+# 🔌 Connecting Your Backend
+
+All backend integration points are marked with **`// TODO:` comments** inside `App.jsx`.
+
+This is where you will connect your **Spring Boot REST APIs**.
+
+---
+
+# 📡 API Integration Examples
+
+### 🔹 Load Contacts (READ)
 
 ```jsx
-// READ — load contacts on mount
 useEffect(() => {
   fetch("/api/contacts")
     .then(res => res.json())
     .then(data => setContacts(data));
 }, []);
+```
 
-// CREATE
+---
+
+### 🔹 Create Contact (CREATE)
+
+```jsx
 onSubmit={(formData) => {
-  fetch("/api/contacts", { method: "POST", body: JSON.stringify(formData) })
-    .then(() => { /* refresh contacts */ });
-}}
-
-// UPDATE
-onSubmit={(formData) => {
-  fetch(`/api/contacts/${formData.id}`, { method: "PUT", body: JSON.stringify(formData) })
-    .then(() => { /* refresh contacts */ });
-}}
-
-// DELETE
-onDelete={(id) => {
-  fetch(`/api/contacts/${id}`, { method: "DELETE" })
-    .then(() => { /* refresh contacts */ });
+  fetch("/api/contacts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(formData)
+  }).then(() => {
+    // Refresh contacts after creating
+  });
 }}
 ```
 
-### Form Data Shape
+---
 
-All forms return an object with these fields:
+### 🔹 Update Contact (UPDATE)
+
+```jsx
+onSubmit={(formData) => {
+  fetch(`/api/contacts/${formData.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(formData)
+  }).then(() => {
+    // Refresh contacts after updating
+  });
+}}
+```
+
+---
+
+### 🔹 Delete Contact (DELETE)
+
+```jsx
+onDelete={(id) => {
+  fetch(`/api/contacts/${id}`, {
+    method: "DELETE"
+  }).then(() => {
+    // Refresh contacts after deleting
+  });
+}}
+```
+
+---
+
+# 📦 Form Data Structure
+
+All forms return a **JavaScript object** with the following structure:
 
 ```js
 {
-  id,       // present on update only
+  id,       // Available only when updating a contact
   name,
-  photo,    // URL string
+  photo,    // URL string for avatar
   mobile,
   email,
   company,
   title,
-  group,
+  group
 }
 ```
 
-## Pages
+---
 
-| Page      | Component            | Description                                   |
-| --------- | -------------------- | --------------------------------------------- |
-| Directory | `PhoneDirectory.jsx` | Lists all contacts, has search                |
-| Create    | `CreateContact.jsx`  | Blank form, calls `onSubmit(formData)`        |
-| View      | `ViewContact.jsx`    | Read-only contact detail                      |
-| Update    | `UpdateContact.jsx`  | Pre-filled edit form with live avatar preview |
+# 📄 Pages Overview
+
+| Page | Component | Description |
+|-----|-----|-----|
+| Phone Directory | `PhoneDirectory.jsx` | Displays all contacts and allows searching |
+| Create Contact | `CreateContact.jsx` | Blank form used to add a new contact |
+| View Contact | `ViewContact.jsx` | Displays contact details in read-only mode |
+| Update Contact | `UpdateContact.jsx` | Editable contact form with live avatar preview |
+
+---
+
+# 🎨 UI Features
+
+- Responsive design using **TailwindCSS**
+- Contact **search functionality**
+- **Live avatar preview** while editing
+- Clean **component-based architecture**
+- Easy **Spring Boot API integration**
+
+---
+
+# 🔮 Future Improvements
+
+- Authentication (JWT / Clerk / OAuth)
+- Contact groups management
+- Pagination
+- Image upload instead of URL
+- Cloud deployment (AWS / Docker)
+
+---
+
+# 👨‍💻 Author
+
+**Manish Bachhav**
+
+GitHub:  
+`https://github.com/your-username`
+
+---
+
+⭐ If you like this project, consider **starring the repository**!
